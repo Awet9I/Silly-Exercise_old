@@ -1,0 +1,30 @@
+name: Silly App Test
+
+on:
+  pull_requests:
+    branches:
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Silly-Exercise_old/
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9]
+
+steps:
+  - uses: actions/checkout@v3
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-varion: ${{ matrix.python-version }}
+
+  - name: Install dependecies
+    run: python -m pip install --upgrade pip
+      pip install -r ../requirements.txt
+
+  - name: Lint Test app
+    run: pylint .
